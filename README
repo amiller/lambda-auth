@@ -1,0 +1,25 @@
+λ● (lambda-auth): an OCaml compiler extension for authenticated data structures.
+(c) 2013 by Andrew Miller, Michael Hicks, Elaine Shi, Jonathan Katz.
+Released under the GPL.
+Some of the code is (c) 2009-2012 Jun Furuse (see https://bitbucket.org/camlspotter/compiler-libs-hack)
+
+WARNING: This is an academic research prototype. Although the topic involves secure protocols, this software should be considered unfit for any such purpose.
+
+Examples of authenticated data structure programs written in lambda-auth:
+ - bintree.ml, skiplist.ml, redblack.ml, blockchain.ml
+
+Requirements:
+- OCaml SVN head must be installed, and in particular must exist as the directory "../ocaml-trunk"
+
+Build instructions:
+- make          # builds the compiler
+- make prover   # builds prover version of the examples
+- ./driver_prv  # (runs the prover code)
+- make verifier # builds the verifier version of the example
+- ./driver_vrf  # (runs the verifier code)
+- make ideal    # builds the unauthenticated version
+- ./driver_idl  # runs the unauthenticated example
+
+optional optimizations:
+- STRATEGY=buf  make prover verifier
+- STRATEGY=susp make prover verifier
