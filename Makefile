@@ -46,7 +46,7 @@ poorman: $(OBJS)
 
 abstraction:
 	ocamlc -c merkle.mli
-	ocamlfind ocamlopt -package cryptokit,batteries,sha -c merkle.ml
+	ocamlfind ocamlopt -package batteries,sha -c merkle.ml
 	ocamlc -c bintree.ml
 	ocamlc -c skiplist.ml
 	ocamlc -c redblack.ml
@@ -55,32 +55,32 @@ abstraction:
 	ocamlfind ocamlopt -package benchmark,batteries,sha -c driver.ml
 
 prover:
-	ocamlfind ocamlopt -package cryptokit,batteries,sha -c merkle.ml
+	ocamlfind ocamlopt -package batteries,sha -c merkle.ml
 	MODE=prover ./poorman $(PROF) -c bintree.ml
 	MODE=prover ./poorman $(PROF) -c skiplist.ml
 	MODE=prover ./poorman $(PROF) -c redblack.ml
 	MODE=prover ./poorman $(PROF) -c mtree.ml
 	MODE=prover ./poorman $(PROF) -c blockchain.ml
 	ocamlfind ocamlopt $(PROF) -package benchmark,batteries,sha -c driver.ml
-	ocamlfind ocamlopt $(PROF) -linkpkg -package cryptokit,benchmark,batteries,sha -o driver_prv merkle.cmx skiplist.cmx bintree.cmx redblack.cmx mtree.cmx blockchain.cmx driver.ml 
+	ocamlfind ocamlopt $(PROF) -linkpkg -package benchmark,batteries,sha -o driver_prv merkle.cmx skiplist.cmx bintree.cmx redblack.cmx mtree.cmx blockchain.cmx driver.ml 
 
 verifier:
-	ocamlfind ocamlopt -package cryptokit,batteries,sha $(PROF) -c merkle.ml
+	ocamlfind ocamlopt -package batteries,sha $(PROF) -c merkle.ml
 	MODE=verifier ./poorman $(PROF) -c bintree.ml
 	MODE=verifier ./poorman $(PROF) -c skiplist.ml
 	MODE=verifier ./poorman $(PROF) -c redblack.ml
 	MODE=verifier ./poorman $(PROF) -c mtree.ml
 	ocamlfind ocamlopt $(PROF) -package benchmark,batteries,sha -c  driver.ml
-	ocamlfind ocamlopt $(PROF) -linkpkg -package cryptokit,benchmark,batteries,sha  -o driver_vrf merkle.cmx skiplist.cmx bintree.cmx redblack.cmx mtree.cmx driver.ml
+	ocamlfind ocamlopt $(PROF) -linkpkg -package benchmark,batteries,sha  -o driver_vrf merkle.cmx skiplist.cmx bintree.cmx redblack.cmx mtree.cmx driver.ml
 
 ideal:
-	ocamlfind ocamlopt -package cryptokit,batteries,sha $(PROF) -c merkle.ml
+	ocamlfind ocamlopt -package batteries,sha $(PROF) -c merkle.ml
 	MODE=ideal ./poorman $(PROF) -c bintree.ml
 	MODE=ideal ./poorman $(PROF) -c skiplist.ml
 	MODE=ideal ./poorman $(PROF) -c redblack.ml
 	MODE=ideal ./poorman $(PROF) -c mtree.ml
 	ocamlfind ocamlopt $(PROF) -package benchmark,batteries,sha -c driver.ml
-	ocamlfind ocamlopt $(PROF) -linkpkg -package cryptokit,benchmark,batteries,sha -o driver_idl merkle.cmx skiplist.cmx bintree.cmx redblack.cmx mtree.cmx driver.ml
+	ocamlfind ocamlopt $(PROF) -linkpkg -package benchmark,batteries,sha -o driver_idl merkle.cmx skiplist.cmx bintree.cmx redblack.cmx mtree.cmx driver.ml
 
 cmerkle::
 	gcc -o cmerkle -O2 -pg -std=c99 cmerkle.c -lcrypto

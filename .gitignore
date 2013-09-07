@@ -1,1 +1,6 @@
 .svn
+*.cmx
+*.cmo
+*.cmt
+*.cmi
+*.cmti

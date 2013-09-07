@@ -57,8 +57,8 @@ let prf_input = ref (open_in_bin "/dev/null")
 let setup_prover path = close_out !prf_output; prf_output := open_out_bin path
 let setup_verifier path = close_in !prf_input; prf_input := open_in_bin path
 
-let to_hex = Cryptokit.transform_string (Cryptokit.Hexa.encode())
-let from_hex = Cryptokit.transform_string (Cryptokit.Hexa.decode())
+(* let to_hex = Cryptokit.transform_string (Cryptokit.Hexa.encode()) *)
+(* let from_hex = Cryptokit.transform_string (Cryptokit.Hexa.decode()) *)
 
 (* let sha1hash s = Cryptokit.hash_string (Cryptokit.Hash.sha1()) s  *)
 let sha1hash s = Sha1.to_bin (Sha1.string s) 
@@ -102,20 +102,22 @@ let _auth_verifier _ : 'a -> 'a authtype = function x -> Shallow (hash x)
   Reuse buffer optimization
  *************************)
 
+module IMap = Map.Make(struct type t = int let compare : int -> int -> int = compare end)
+
 let max_vrf_buf = 1000
 let counter = ref 0
-let lru_buf = ref BatMap.IntMap.empty
+let lru_buf = ref IMap.empty
 let hash_buf = Hashtbl.create max_vrf_buf
 
 let insert_and_resize d str =
   (* Insert this in the table *)
-  lru_buf := BatMap.IntMap.add !counter d !lru_buf;
+  lru_buf := IMap.add !counter d !lru_buf;
   Hashtbl.add hash_buf d (!counter,str);
    
   (* Resize the table if necessary *)
   if Hashtbl.length hash_buf > max_vrf_buf then begin
-    let cnt,d = BatMap.IntMap.min_binding !lru_buf in
-    lru_buf := BatMap.IntMap.remove cnt !lru_buf;
+    let cnt,d = IMap.min_binding !lru_buf in
+    lru_buf := IMap.remove cnt !lru_buf;
     Hashtbl.remove hash_buf d
   end
       
@@ -126,7 +128,7 @@ let _unauth_prover_buf (map: any_authmap -> 'a -> 'a) (x:'a authtype) : 'a =
     (* This is already in the buf, but we'll freshen it *)
     let idx,_ = Hashtbl.find hash_buf d in
     Hashtbl.remove hash_buf d;
-    lru_buf := BatMap.IntMap.remove idx !lru_buf
+    lru_buf := IMap.remove idx !lru_buf
   end else begin
     (* Write it out! *)
     Marshal.to_channel !prf_output shal_y no_share
@@ -151,7 +153,7 @@ let _unauth_verifier_buf (map: any_authmap->'a->'a) : 'a authtype -> 'a = functi
           (* Cache hit *)
           let idx,str = Hashtbl.find hash_buf d in
           Hashtbl.remove hash_buf d;
-          lru_buf := BatMap.IntMap.remove idx !lru_buf;
+          lru_buf := IMap.remove idx !lru_buf;
           insert_and_resize d str;
           Marshal.from_string str 0
         end else
@@ -342,5 +344,5 @@ let insist x =
 let flush_cache () =
   counter := 0;
   Hashtbl.clear hash_buf;
-  lru_buf := BatMap.IntMap.empty;
+  lru_buf := IMap.empty;
   flush_all()
