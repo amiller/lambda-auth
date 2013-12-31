@@ -10,42 +10,30 @@ GPADS is a tool for generating secure authenticated data structure protocols fro
 
 Based on a programming language concept, λ● (pronounced "lambda-auth"), presented POPL 2014. 
 
-## What are authenticated data structures?
+## What are Authenticated Data Structures (ADSs)?
 
-Authenticated data structures are protocols for securely outsourcing data storage to untrusting parties. Typically, the protocol is between a Client and a Server. The Client doesn't want to store very much data (it has limited hard drive capacity), but it also doesn't trust the Server to behave correctly.
+ADSs are secure protocols for outsourcing data to untrusted parties. Suppose a Client that doesn't have much storage capacity available (maybe it's a mobile device) can communicate to a powerful Server that it doesn't trust. An ADS protocol...
 
-## Update Author Attributes
+## Example: Binary Search Tree
 
-In `_config.yml` remember to specify your own data:
+The following code (from `bintree.ml`) is an example of membership lookup for an authenticated set:
+
+
+    let rec member x = function
+      | Tip -> false
+      | Bin a -> let (l,y,r) = (fun x -> unauth x) a in
+          if x = y then true else if x < y
+          then member x l
+          else member x r
     
-    title : My Blog =)
-    
-    author :
-      name : Name Lastname
-      email : blah@email.test
-      github : username
-      twitter : username
 
-The theme should reference these variables whenever needed.
-    
-## Sample Posts
 
-This blog contains sample posts which help stage pages and blog data.
-When you don't need the samples anymore just delete the `_posts/core-samples` folder.
+## Running the examples:
 
-    $ rm -rf _posts/core-samples
+To run the examples...
 
-Here's a sample "posts list".
+    $ make driver
+    $ ./poorman bintree.ml
 
-<ul class="posts">
-  {% for post in site.posts %}
-    <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a></li>
-  {% endfor %}
-</ul>
-
-## To-Do
-
-This theme is still unfinished. If you'd like to be added as a contributor, [please fork](http://github.com/plusjade/jekyll-bootstrap)!
-We need to clean up the themes, make theme usage guides with theme-specific markup examples.
 
 
