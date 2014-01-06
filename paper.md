@@ -41,7 +41,7 @@ description: "asdf"
   efficient, giving up little compared to the hand-optimized data
   structures developed previously.
   </p><p>
-  [ <a href="http://www.cs.umd.edu/~mwh/papers/gpads.pdf">.pdf</a> ] 
+  [ <a href="http://www.cs.umd.edu/~amiller/gpads/gpads.pdf">.pdf</a> ] 
   [ <a href="https://github.com/amiller/ads-pl">code</a> ]
   [ <a href="http://www.cs.umd.edu/~amiller/gpads/gpads-full.pdf">full version (pdf)</a> ]
 <a name="miller14gpads"></a></p>
