@@ -1,7 +1,6 @@
 ---
 layout: page
 title: Authenticated Data Structures, Generically
-tagline: Merkleize all the things
 ---
 
 {% include JB/setup %}

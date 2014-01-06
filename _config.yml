@@ -9,12 +9,10 @@ pygments: true
 # so be sure to set them if your theme uses them.
 #
 title : Authenticated Data Structures, Generically
-tagline: Merkleize all the things
+tagline: (c) 2013 University of Maryland
 author :
   name : Andrew Miller
-  email : amiller@cs.umd.edu    
-  github : amiller
-  twitter : socrates1024
+  email : amiller@cs.umd.edu
 
 # The production_url is only used when full-domain names are needed
 # such as sitemap.txt 
