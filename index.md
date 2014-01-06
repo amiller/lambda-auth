@@ -6,7 +6,7 @@ tagline: Merkleizing all the things
 
 {% include JB/setup %}
 
-λ● (pronounced "lambda-auth") is a tool for generating authenticated data structure protocols from simple specifications written in an ordinary programming language (OCaml).
+λ● (pronounced "lambda-auth") is a tool for generating secure "Authenticated Data Structure" protocols from simple specifications written in an ordinary programming language (OCaml).
 
 The tool consists of a patched OCaml compiler, and is based on a programming language design presented at POPL 2014.
 
@@ -18,7 +18,7 @@ Authenticated Data Structures (ADSs) are protocols for outsourcing data to untru
 <img style="width:500px;display:block;margin-left:auto;margin-right:auto" src="{{ BASE_PATH }}/assets/graphic.png" />
 </div>
 
-ADSs work by augmenting ordinary data structures with collision-resistant cryptographic hashes.
+ADSs work by augmenting ordinary data structures with collision-resistant cryptographic hashes. 
 
 ## Example: Binary Search Tree
 
