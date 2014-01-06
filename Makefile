@@ -27,7 +27,7 @@ OCAMLBIN = $(BINDIR)
 
 # Compilation
 #############
-OCAMLSRCDIR=..
+OCAMLSRCDIR=../ocaml-trunk
 INCLUDES_DEP=-I +compiler-libs -package cryptokit
 
 # Requires unix!
@@ -39,48 +39,49 @@ OBJS=		$(addsuffix .cmo, $(MODULES))
 
 XOBJS=		$(addsuffix .cmx, $(MODULES))
 
-PROF= #-p -g
+PROF= -I examples #-p -g
 
 poorman: $(OBJS)
 	ocamlfind ocamlc -package cryptokit -g -o $@ -I +compiler-libs -linkpkg ocamlcommon.cma ocamloptcomp.cma $(OBJS)
 
-abstraction:
-	ocamlc -c merkle.mli
-	ocamlfind ocamlopt -package batteries,sha -c merkle.ml
-	ocamlc -c bintree.ml
-	ocamlc -c skiplist.ml
-	ocamlc -c redblack.ml
-	ocamlc -c mtree.ml
-	ocamlc -c blockchain.ml
-	ocamlfind ocamlopt -package benchmark,batteries,sha -c driver.ml
-
 prover:
-	ocamlfind ocamlopt -package batteries,sha -c merkle.ml
-	MODE=prover ./poorman $(PROF) -c bintree.ml
-	MODE=prover ./poorman $(PROF) -c skiplist.ml
-	MODE=prover ./poorman $(PROF) -c redblack.ml
-	MODE=prover ./poorman $(PROF) -c mtree.ml
-	MODE=prover ./poorman $(PROF) -c blockchain.ml
-	ocamlfind ocamlopt $(PROF) -package benchmark,batteries,sha -c driver.ml
-	ocamlfind ocamlopt $(PROF) -linkpkg -package benchmark,batteries,sha -o driver_prv merkle.cmx skiplist.cmx bintree.cmx redblack.cmx mtree.cmx blockchain.cmx driver.ml 
+	ocamlfind ocamlopt -package batteries,sha -c examples/merkle.ml
+	MODE=prover ./poorman $(PROF) -c examples/bintree.ml
+	MODE=prover ./poorman $(PROF) -c examples/skiplist.ml
+	MODE=prover ./poorman $(PROF) -c examples/redblack.ml
+	MODE=prover ./poorman $(PROF) -c examples/mtree.ml
+	MODE=prover ./poorman $(PROF) -c examples/blockchain.ml
+	ocamlfind ocamlopt $(PROF) -package benchmark,batteries,sha -c examples/driver.ml
+	ocamlfind ocamlopt $(PROF) -linkpkg -package benchmark,batteries,sha -o driver_prv merkle.cmx skiplist.cmx bintree.cmx redblack.cmx mtree.cmx blockchain.cmx examples/driver.ml 
 
 verifier:
-	ocamlfind ocamlopt -package batteries,sha $(PROF) -c merkle.ml
-	MODE=verifier ./poorman $(PROF) -c bintree.ml
-	MODE=verifier ./poorman $(PROF) -c skiplist.ml
-	MODE=verifier ./poorman $(PROF) -c redblack.ml
-	MODE=verifier ./poorman $(PROF) -c mtree.ml
-	ocamlfind ocamlopt $(PROF) -package benchmark,batteries,sha -c  driver.ml
-	ocamlfind ocamlopt $(PROF) -linkpkg -package benchmark,batteries,sha  -o driver_vrf merkle.cmx skiplist.cmx bintree.cmx redblack.cmx mtree.cmx driver.ml
+	ocamlfind ocamlopt -package batteries,sha $(PROF) -c examples/merkle.ml
+	MODE=verifier ./poorman $(PROF) -c examples/bintree.ml
+	MODE=verifier ./poorman $(PROF) -c examples/skiplist.ml
+	MODE=verifier ./poorman $(PROF) -c examples/redblack.ml
+	MODE=verifier ./poorman $(PROF) -c examples/mtree.ml
+	ocamlfind ocamlopt $(PROF) -package benchmark,batteries,sha -c  examples/driver.ml
+	ocamlfind ocamlopt $(PROF) -linkpkg -package benchmark,batteries,sha  -o driver_vrf merkle.cmx skiplist.cmx bintree.cmx redblack.cmx mtree.cmx examples/driver.ml
 
 ideal:
-	ocamlfind ocamlopt -package batteries,sha $(PROF) -c merkle.ml
-	MODE=ideal ./poorman $(PROF) -c bintree.ml
-	MODE=ideal ./poorman $(PROF) -c skiplist.ml
-	MODE=ideal ./poorman $(PROF) -c redblack.ml
-	MODE=ideal ./poorman $(PROF) -c mtree.ml
-	ocamlfind ocamlopt $(PROF) -package benchmark,batteries,sha -c driver.ml
-	ocamlfind ocamlopt $(PROF) -linkpkg -package benchmark,batteries,sha -o driver_idl merkle.cmx skiplist.cmx bintree.cmx redblack.cmx mtree.cmx driver.ml
+	ocamlfind ocamlopt -package batteries,sha $(PROF) -c examples/merkle.ml
+	MODE=ideal ./poorman $(PROF) -c examples/bintree.ml
+	MODE=ideal ./poorman $(PROF) -c examples/skiplist.ml
+	MODE=ideal ./poorman $(PROF) -c examples/redblack.ml
+	MODE=ideal ./poorman $(PROF) -c examples/mtree.ml
+	ocamlfind ocamlopt $(PROF) -package benchmark,batteries,sha -c examples/driver.ml
+	ocamlfind ocamlopt $(PROF) -linkpkg -package benchmark,batteries,sha -o driver_idl merkle.cmx skiplist.cmx bintree.cmx redblack.cmx mtree.cmx examples/driver.ml
+
+# abstraction:
+# #	 For creating the interface files, compile only without linking
+# 	ocamlc -c examples/merkle.mli
+# 	ocamlfind ocamlopt -package batteries,sha -c examples/merkle.ml
+# 	ocamlc -c examples/bintree.ml
+# 	ocamlc -c examples/skiplist.ml
+# 	ocamlc -c examples/redblack.ml
+# 	ocamlc -c examples/mtree.ml
+# 	ocamlc -c examples/blockchain.ml
+# 	ocamlfind ocamlopt -package benchmark,batteries,sha -c examples/driver.ml
 
 cmerkle::
 	gcc -o cmerkle -O2 -pg -std=c99 cmerkle.c -lcrypto
@@ -90,19 +91,19 @@ modes: prover verifier ideal
 clean::
 	rm -f poorman
 
-main.ml: ../ocaml-trunk/driver/main.ml
+main.ml: $(OCAMLSRCDIR)/driver/main.ml
 	cp $< $@
 
-optmain.ml: ../ocaml-trunk/driver/optmain.ml
+optmain.ml: $(OCAMLSRCDIR)/driver/optmain.ml
 	cp $< $@
 
-untypeast.ml: ../ocaml-trunk/tools/untypeast.ml
+untypeast.ml: $(OCAMLSRCDIR)/tools/untypeast.ml
 	cp $< $@
 
-untypeast.mli: ../ocaml-trunk/tools/untypeast.mli
+untypeast.mli: $(OCAMLSRCDIR)/tools/untypeast.mli
 	cp $< $@
 
-pprintast.ml: ../ocaml-trunk/parsing/pprintast.ml
+pprintast.ml: $(OCAMLSRCDIR)/parsing/pprintast.ml
 	cp $< $@
 
 beforedepend:: optmain.ml main.ml untypeast.ml untypeast.mli pprintast.ml
@@ -136,9 +137,9 @@ clean::
 beforedepend::
 
 depend: beforedepend
-	ocamldep $(INCLUDES) *.mli *.ml > .depend
+	ocamldep $(INCLUDES_DEP) *.mli *.ml  > .depend
 
 clean::
-	rm -f *.cm* *.annot *.o
+	rm -f *.cm* *.annot *.o examples/*.cm*
 
 include .depend
