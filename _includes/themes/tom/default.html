@@ -12,18 +12,22 @@
    <!-- Homepage CSS -->
    <link rel="stylesheet" href="{{ ASSET_PATH }}/css/screen.css" type="text/css" media="screen, projection" />
 
+   <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=ml"></script>
+   <!-- <link href="{{ BASE_PATH }}/assets/google-code-prettify/prettify.css" type="text/css" rel="stylesheet" />
+   <script type="text/javascript" src="{{ BASE_PATH }}/assets/google-code-prettify/run_prettify.js?lang=ml"></script> -->
+
    <!-- Typekit -->
    <script type="text/javascript" src="http://use.typekit.com/jpd0pfm.js"></script>
    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 </head>
-<body>
+<body onLoad="prettyPrint()">
 
   <div class="site">
     <div class="title">
       <a href="{{ HOME_PATH }}">{{ site.title }}</a>
       <div>
       <!-- <a class="extra" href="{{ BASE_PATH }}{{ site.JB.archive_path }}">Archive</a> -->
-      <a class="extra" href="https://cs.umd.edu/~amiller/gpads">Paper</a> 
+      <a class="extra" href="{{ BASE_PATH }}{{ site.JB.pages_path }}/paper.html">Paper</a> 
       <a class="extra" href="{{ BASE_PATH }}{{ site.JB.pages_path }}/about.html">About</a> 
       <!-- <a class="extra" href="{{ BASE_PATH }}{{ site.JB.categories_path }}">Categories</a> -->
       <!-- <a class="extra" href="{{ BASE_PATH }}{{ site.JB.tags_path }}">Tags</a> --></div>
@@ -52,7 +56,7 @@
       </div>-->
     </div>
   </div>
-  <a href="http://github.com/{{ site.author.github }}"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" /></a>
+  <a href="http://github.com/{{ site.author.github }}/ads-pl"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" /></a>
 
   {% include JB/analytics %}
 </body>
