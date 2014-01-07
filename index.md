@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Authenticated Data Structures, Generically
+title: λ● - Authenticated Data Structures, Generically
 ---
 
 {% include JB/setup %}
@@ -21,7 +21,7 @@ ADSs work by augmenting ordinary data structures with collision-resistant crypto
 
 ## Example: Binary Search Tree
 
-Creating an ADS protocol in λ● is as easy as writing an ordinary data structure program in OCaml. The following code (from `bintree.ml`) is an example of membership lookup in an authenticated set of integers:
+Creating an ADS protocol in λ● is as easy as writing an ordinary data structure program in OCaml. The following code (from `examples/bintree.ml`) is an example of membership lookup in an authenticated set of integers:
 
 <?prettify lang=ml?>
     let rec (member : 'auth tree -> int -> bool) x = function
