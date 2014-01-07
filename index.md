@@ -38,7 +38,7 @@ The only non-standard syntax is the `'auth` type operator and `unauth` keywords,
 
 Get the most recent version of λ● from github:
 
-    $ git clone https://github.com/amiller/ads-pl
+    $ git clone https://github.com/amiller/lambda-auth
 
 To run the examples, you will first need a copy of ocaml (trunk) installed, and the source directory should be located in the previous directory as `../ocaml-trunk`.
 

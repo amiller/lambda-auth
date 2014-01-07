@@ -23,7 +23,7 @@ author :
 # Finally if you are pushing to a GitHub project page, include the project name at the end.
 #
 # production_url : http://username.github.io
-production_url : http://amiller.github.io/ads-pl
+production_url : http://amiller.github.io/lambda-auth
 
 # All Jekyll-Bootstrap specific configurations are namespaced into this hash
 #
@@ -52,7 +52,7 @@ JB :
   #   - Only the following values are falsy: ["", null, false]
   #   - When setting BASE_PATH it must be a valid url.
   #     This means always setting the protocol (http|https) or prefixing with "/"
-  BASE_PATH : http://amiller.github.io/ads-pl
+  BASE_PATH : http://amiller.github.io/lambda-auth
 
   # By default, the asset_path is automatically defined relative to BASE_PATH plus the enabled theme.
   # ex: [BASE_PATH]/assets/themes/[THEME-NAME]
