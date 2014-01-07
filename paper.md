@@ -42,8 +42,9 @@ description: "asdf"
   structures developed previously.
   </p><p>
   [ <a href="http://www.cs.umd.edu/~amiller/gpads/gpads.pdf">.pdf</a> ] 
-  [ <a href="https://github.com/amiller/ads-pl">code</a> ]
   [ <a href="http://www.cs.umd.edu/~amiller/gpads/gpads-full.pdf">full version (pdf)</a> ]
+  [ <a href="https://github.com/amiller/ads-pl">code</a> ]
+  [ <a href="https://amiller.github.io/lambda-auth">website</a> ]
 <a name="miller14gpads"></a></p>
 <font size="-1">
 <pre>
