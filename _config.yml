@@ -8,7 +8,7 @@ pygments: true
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
 #
-title : Authenticated Data Structures, Generically
+title : λ● - Authenticated Data Structures, Generically
 tagline: (c) 2013 University of Maryland
 author :
   name : Andrew Miller
