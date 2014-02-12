@@ -27,7 +27,7 @@ OCAMLBIN = $(BINDIR)
 
 # Compilation
 #############
-OCAMLSRCDIR=../ocaml-trunk
+OCAMLSRCDIR=../ocaml-4.01.0
 INCLUDES_DEP=-I +compiler-libs -package cryptokit
 
 # Requires unix!

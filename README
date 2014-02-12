@@ -9,7 +9,8 @@ Examples of authenticated data structure programs written in lambda-auth:
  - bintree.ml, skiplist.ml, redblack.ml, blockchain.ml
 
 Requirements:
-- OCaml SVN head must be installed, and in particular must exist as the directory "../ocaml-trunk"
+- The 4.01.0 release of OCaml head must be installed, and in particular must exist as the directory "../ocaml-4.01.0"
+- Additionally, several packages are used (use the OPAM package manager): opam install batteries benchmark cryptokit sha
 
 Build instructions:
 - make          # builds the compiler
