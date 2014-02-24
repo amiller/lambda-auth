@@ -62,8 +62,8 @@ let range = let rec _range acc lo hi =
     if lo < hi then _range (hi-1 :: acc) lo (hi-1) else acc
 in _range []
 
-let rand_odd () = Random.int (max_int / 2) * 2;;
-let rand_even () = Random.int (max_int / 2) * 2 + 1;;
+let rand_odd () = Random.int(50000000) * 2;;
+let rand_even () = Random.int (50000000) * 2 + 1;;
 
 let prepare_tree k =
   let tree = ref Redblack.empty in
