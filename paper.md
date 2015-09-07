@@ -11,7 +11,7 @@ description: "asdf"
   Andrew Miller, Michael Hicks, Jonathan Katz, and Elaine Shi.
   In <i>Proceedings of the ACM Conference on Principles of
   Programming Languages (POPL)</i>, January 2014.
-  To appear.</font>
+  </font>
 <p>An authenticated data structure (ADS) is a data structure whose
   operations can be carried out by an untrusted <em>prover</em>, the
   results of which a <em>verifier</em> can efficiently check as
