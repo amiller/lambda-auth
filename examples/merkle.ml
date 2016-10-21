@@ -325,9 +325,13 @@ let _auth_ideal _ a = Ideal a
 let _unauth_ideal _ = function | Ideal a -> a 
 | _ -> failwith "_unauth_ideal called without (Ideal a)"
 
-let is_verifier = (Filename.basename(Sys.executable_name) = "driver_vrf");;
-let is_prover = (Filename.basename(Sys.executable_name) = "driver_prv");;
-let is_ideal = (Filename.basename(Sys.executable_name) = "driver_idl");;
+let endswith s suf = 
+  let lsuf = String.length suf in 
+  let l    = String.length s   in
+  (suf = String.sub s (l - lsuf) lsuf);;
+let is_verifier = endswith (Filename.basename(Sys.executable_name)) "_vrf";;
+let is_prover = endswith (Filename.basename(Sys.executable_name)) "_prv";;
+let is_ideal = endswith (Filename.basename(Sys.executable_name)) "_idl";;
 
 let mode_name = 
   if is_prover then "prover"

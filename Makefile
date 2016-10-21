@@ -1,19 +1,3 @@
-# Modified by <anonymous> July 2013
-
-#######################################################################
-#                                                                     #
-#                            OCamlSpotter                             #
-#                                                                     #
-#                             Jun FURUSE                              #
-#                                                                     #
-#   Copyright 2008-2012 Jun Furuse. All rights reserved.              #
-#   This file is distributed under the terms of the GNU Library       #
-#   General Public License, with the special exception on linking     #
-#   described in file LICENSE.                                        #
-#                                                                     #
-#######################################################################
-
-
 # Various commands and dir
 ##########################
 CAMLRUN= ocamlrun
@@ -44,11 +28,22 @@ PROF= -I examples #-p -g
 poorman: $(OBJS)
 	ocamlfind ocamlc -package cryptokit -g -o $@ -I +compiler-libs -linkpkg ocamlcommon.cma ocamloptcomp.cma $(OBJS)
 
+redblack: 
+	ocamlfind ocamlopt -package batteries,sha $(PROF) -c examples/merkle.ml
+#	prover
+	MODE=prover ./poorman $(PROF) -c examples/redblack.ml
+	ocamlfind ocamlopt $(PROF) -package benchmark,batteries,sha -c examples/driver_redblack.ml
+	ocamlfind ocamlopt $(PROF) -linkpkg -package benchmark,batteries,sha -o redblack_prv merkle.cmx redblack.cmx examples/driver_redblack.ml 
+# #	verifier
+# 	MODE=verifier ./poorman $(PROF) -c examples/redblack.ml
+# 	ocamlfind ocamlopt $(PROF) -package benchmark,batteries,sha -c examples/driver_redblack.ml
+# 	ocamlfind ocamlopt $(PROF) -linkpkg -package benchmark,batteries,sha -o redblack_vrf merkle.cmx redblack.cmx examples/driver_redblack.ml 
+
 prover:
-	ocamlfind ocamlopt -package batteries,sha -c examples/merkle.ml
+	ocamlfind ocamlopt -package batteries,sha $(PROF) -c examples/merkle.ml
 	MODE=prover ./poorman $(PROF) -c examples/bintree.ml
 	MODE=prover ./poorman $(PROF) -c examples/skiplist.ml
-	MODE=prover ./poorman $(PROF) -c examples/redblack.ml
+
 	MODE=prover ./poorman $(PROF) -c examples/mtree.ml
 	MODE=prover ./poorman $(PROF) -c examples/blockchain.ml
 	ocamlfind ocamlopt $(PROF) -package benchmark,batteries,sha -c examples/driver.ml
