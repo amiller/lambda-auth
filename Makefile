@@ -43,7 +43,7 @@ prover:
 	ocamlfind ocamlopt -package batteries,sha $(PROF) -c examples/merkle.ml
 	MODE=prover ./poorman $(PROF) -c examples/bintree.ml
 	MODE=prover ./poorman $(PROF) -c examples/skiplist.ml
-
+	MODE=prover ./poorman $(PROF) -c examples/redblack.ml
 	MODE=prover ./poorman $(PROF) -c examples/mtree.ml
 	MODE=prover ./poorman $(PROF) -c examples/blockchain.ml
 	ocamlfind ocamlopt $(PROF) -package benchmark,batteries,sha -c examples/driver.ml
