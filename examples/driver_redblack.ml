@@ -21,10 +21,12 @@ let rand_even () = Random.int (50000000) * 2 + 1;;
 
 let prepare_tree k =
   let tree = ref Redblack.empty in
+  flush_cache();
   Random.init (0xBEEF + k);
   for i = 0 to two_to k do
     let a = rand_odd() in
     tree := Redblack.insert a (string_of_int a) !tree;
+    insist();
   done;
   !tree;;
 
@@ -43,13 +45,16 @@ let write_tree_prover k =
   Printf.printf "OK\n";
   let file = open_out_bin (Printf.sprintf "data/bst_ann_%03d.dat" k) in
   Marshal.to_channel file (tree) [];
-  Printf.printf "OK\n"; flush_cache();;
+  Printf.printf "OK\n"; flush_cache();
+  close_out file;;
 
 let write_tree_verifier k =
-  let t = shallow_func (read_tree_prover k) in
+  let t = (match (read_tree_prover k) with
+     | MerkleSusp(_,d,_) -> Shallow d
+     | Merkle(d,_)      -> Shallow d) in
   let file = open_out_bin (Printf.sprintf "data/bst_shal_%03d.dat" k) in
   Marshal.to_channel file t [];
-  close_out file
+  close_out file;;
 
 
 let bench_ins iter k =
@@ -58,7 +63,7 @@ let bench_ins iter k =
   in
   Gc.compact();
   let res = throughput1 2
-      ~repeat:5
+      ~repeat:1
       ~fdigits:5
       ~name:(Printf.sprintf "(%s) insert (x%d) rand into 2^%d" Merkle.mode_name iter k)
       (fun () ->
@@ -85,7 +90,7 @@ let bench_look iter k =
   in
   Gc.compact();
   let res = throughput1 2
-      ~repeat:5
+      ~repeat:1
       ~fdigits:5
       ~name:(Printf.sprintf "(%s) lookup (x%d) rand into 2^%d" Merkle.mode_name iter k)
       (fun () ->
